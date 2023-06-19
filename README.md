@@ -30,6 +30,6 @@ The following guides illustrate how to use some features concretely:
 - [x]  add docker container for elasticsearch
 - [x]  add CRUD for post
 - [x]  add import bulk for post
-- [ ]  get embedding from openAi for post
+- [x]  get embedding from openAi for post
 - [ ]  implement semantic search 
 

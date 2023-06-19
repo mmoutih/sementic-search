@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Vector;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,7 +55,8 @@ public class PostService {
     protected PostRepository repository;
 
     public void save(Post post) {
-        logger.info(post.toString());
+        Vector<Double> vector = new Vector<Double>(getEmbedding(post.title() + "" + post.content()));
+        post.embedding(vector);
         repository.save(post);
     }
 
@@ -98,6 +100,8 @@ public class PostService {
             List<Post> posts = new ArrayList<>();
             all.forEach(item -> {
                 Post post = new Post(item[1], item[2]);
+                Vector<Double> vector = new Vector<Double>(getEmbedding(item[1] + "" + item[2]));
+                post.embedding(vector);
                 posts.add(post);
             });
             repository.saveAll(posts);
@@ -132,7 +136,7 @@ public class PostService {
 				String result = response.getBody();
 				JsonNode root;
 				try {
-					logger.info("response openai " +result);
+					
 					root = objectMapper.readTree(result);
 					JsonNode dataRoot = root.path("data");
 					final List<Double> list = new ArrayList<>();
