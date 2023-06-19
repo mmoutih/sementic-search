@@ -27,8 +27,8 @@ The following guides illustrate how to use some features concretely:
 
 ###TODO
 - [x] init project
-- [ ]  add docker container for elasticsearch
-- [ ]  add CRWD for post
+- [x]  add docker container for elasticsearch
+- [ ]  add CRUD for post
 - [ ]  get embedding from openAi for post
 - [ ]  implement semantic search 
 
