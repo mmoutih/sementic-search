@@ -42,8 +42,8 @@ public class MainView extends AppLayout {
 
     private Tab[] createMenuItems() {
         return new Tab[] { createTab("Search", VaadinIcon.SEARCH.create(), SearchView.class),
-                createTab("Post", VaadinIcon.EDIT.create(), FormView.class),
-                createTab("About", VaadinIcon.DOWNLOAD.create(), ImportView.class) };
+                createTab("New Post", VaadinIcon.EDIT.create(), PostView.class),
+                createTab("Import posts", VaadinIcon.DOWNLOAD.create(), ImportView.class) };
     }
 
     private static Tab createTab(String text, Icon icon,

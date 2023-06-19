@@ -3,6 +3,8 @@ package maroune.semanticsearch.simenticsearch.http;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -12,14 +14,21 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.BeforeEvent;
+import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.Route;
 
 import maroune.semanticsearch.simenticsearch.data.models.Post;
+import maroune.semanticsearch.simenticsearch.data.services.PostService;
 
 @Route(value = "", layout = MainView.class)
-public class SearchView extends VerticalLayout {
+public class SearchView extends VerticalLayout{
 
-    public SearchView() {
+    protected final PostService service;
+
+    @Autowired
+    public SearchView(PostService service) {
+        this.service = service;
         add(getFormSearch(), addGrid());
     }
 
@@ -30,21 +39,16 @@ public class SearchView extends VerticalLayout {
         grid.addComponentColumn(item -> {
             HorizontalLayout wrapper = new HorizontalLayout();
             wrapper.add( new Button(VaadinIcon.EDIT.create(), click -> {
-                (new Notification()).show("edit");
+                goPost(item);
             }));
-             wrapper.add( new Button(VaadinIcon.TRASH.create(), click -> {
-                (new Notification()).show("delete");
+            wrapper.add(new Button(VaadinIcon.TRASH.create(), click -> {
+                service.delete(item);
+                grid.setItems(service.getAll());
+                (new Notification()).show("post deleted");
             }));
             return wrapper;
         });
-        List<Post> posts = new ArrayList<>();
-        posts.add(
-            new Post("one", "test", "test", null)
-        );
-        posts.add(
-            new Post("tow", "test tow", "test", null)
-        );
-        grid.setItems(posts);
+        grid.setItems(service.getAll());
         return grid;
     }
 
@@ -59,6 +63,13 @@ public class SearchView extends VerticalLayout {
                 searchField,
                 searchButton);
         return formSearch;
+    }
+
+    protected void goPost(Post post) {
+       
+        this.getUI().ifPresent(
+            ui-> ui.navigate("post?id="+post.id())
+        );
     }
 
 }
