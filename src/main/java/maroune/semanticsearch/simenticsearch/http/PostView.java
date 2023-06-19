@@ -3,8 +3,7 @@ package maroune.semanticsearch.simenticsearch.http;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.flow.component.button.Button;
@@ -15,8 +14,6 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
-import com.vaadin.flow.router.BeforeEvent;
-import com.vaadin.flow.router.OptionalParameter;
 import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.Route;
 
@@ -27,8 +24,6 @@ import com.vaadin.flow.data.binder.Binder;
 @Route(value="post", layout = MainView.class)
 public class PostView extends VerticalLayout implements  BeforeEnterObserver{
 
-    Logger logger = LoggerFactory.getLogger(PostView.class);
-
     protected final PostService service;
     protected Post post;
 
@@ -37,7 +32,7 @@ public class PostView extends VerticalLayout implements  BeforeEnterObserver{
 
     /* Action buttons */
 	Button save = new Button("Save", VaadinIcon.CHECK.create());
-	Button cancel = new Button("Cancel");
+	Button cancel = new Button("Cancel", VaadinIcon.BACKWARDS.create());
 	Button delete = new Button("Delete", VaadinIcon.TRASH.create());
     HorizontalLayout actions = new HorizontalLayout(save, cancel, delete);
     
@@ -95,12 +90,11 @@ public class PostView extends VerticalLayout implements  BeforeEnterObserver{
        
         if (parametersMap.containsKey("id")) {
             String id = parametersMap.get("id").get(0);
-            logger.info(id);
             Post post = service.getPost(id);
             if(post != null)
                 binder.setBean(post);
         }
-        //throw new UnsupportedOperationException("Unimplemented method 'beforeEnter'");
+    
     }
     
 

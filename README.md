@@ -29,7 +29,7 @@ The following guides illustrate how to use some features concretely:
 - [x] init project
 - [x]  add docker container for elasticsearch
 - [x]  add CRUD for post
-- [ ]  add import bulk for post
+- [x]  add import bulk for post
 - [ ]  get embedding from openAi for post
 - [ ]  implement semantic search 
 

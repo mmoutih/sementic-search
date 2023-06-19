@@ -9,6 +9,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -25,15 +26,20 @@ import maroune.semanticsearch.simenticsearch.data.services.PostService;
 public class SearchView extends VerticalLayout{
 
     protected final PostService service;
+    protected int rowIndex = 0;
 
     @Autowired
     public SearchView(PostService service) {
         this.service = service;
+        this.setHeightFull();
         add(getFormSearch(), addGrid());
     }
 
     private Component addGrid() {
         Grid<Post> grid = new Grid<>(Post.class, isAttached());
+        grid.addComponentColumn(item -> {
+            return new Span(getRowIndex());
+        }).setHeader("#");
         grid.addColumn(Post::id).setHeader("Id");
         grid.addColumn(Post::title).setHeader("Title");
         grid.addComponentColumn(item -> {
@@ -48,8 +54,13 @@ public class SearchView extends VerticalLayout{
             }));
             return wrapper;
         });
+        grid.setHeightFull();
         grid.setItems(service.getAll());
-        return grid;
+        HorizontalLayout wrapper = new HorizontalLayout();
+        wrapper.setWidthFull();
+        wrapper.setHeightFull();
+        wrapper.add(grid);
+        return wrapper;
     }
 
     private Component getFormSearch() {
@@ -66,10 +77,13 @@ public class SearchView extends VerticalLayout{
     }
 
     protected void goPost(Post post) {
-       
+
         this.getUI().ifPresent(
-            ui-> ui.navigate("post?id="+post.id())
-        );
+                ui -> ui.navigate("post?id=" + post.id()));
+    }
+    
+    protected String getRowIndex(){
+        return String.valueOf(++this.rowIndex); // increments the rowIndex for each row
     }
 
 }
