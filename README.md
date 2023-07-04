@@ -50,10 +50,6 @@ start the app
 ```bash
 mvnw spring-boot:run
 ```
-<<<<<<< HEAD
 visit [localhost:8080](http://localhost:8080)
-=======
-viste [localhost:8080](http://localhost:8080)
->>>>>>> fa16bfa27b84ef479ac31ef12eb4325aec2383d3
 
 
