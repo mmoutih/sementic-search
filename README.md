@@ -25,7 +25,7 @@ The following guides illustrate how to use some features concretely:
 * [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
 * [Creating CRUD UI with Vaadin](https://spring.io/guides/gs/crud-with-vaadin/)
 
-## TODO
+### TODO
 - [x] init project
 - [x] add docker container for elasticsearch
 - [x] add CRUD for post
@@ -33,7 +33,7 @@ The following guides illustrate how to use some features concretely:
 - [x] get embedding from openAi for post
 - [x] implement semantic search 
 
-## Installation
+### Installation
 
 rename env file
 
@@ -48,7 +48,7 @@ openai.token=YOUR_KEY
 start the app
 
 ```bash
-docker-compose up
+docker-compose up -d
 mvnw spring-boot:run
 ```
 visit [localhost:8080](http://localhost:8080)
