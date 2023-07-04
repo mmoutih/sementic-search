@@ -27,9 +27,29 @@ The following guides illustrate how to use some features concretely:
 
 ###TODO
 - [x] init project
-- [x]  add docker container for elasticsearch
-- [x]  add CRUD for post
-- [x]  add import bulk for post
-- [x]  get embedding from openAi for post
-- [ ]  implement semantic search 
+- [x] add docker container for elasticsearch
+- [x] add CRUD for post
+- [x] add import bulk for post
+- [x] get embedding from openAi for post
+- [x] implement semantic search 
+
+##Installation
+
+rename env file
+
+```bash
+mv env.properties.exemple env.properties
+```
+add your openAi key to env.properties
+
+```bash
+openai.token=YOUR_KEY
+```
+start the app
+
+```bash
+mvnw spring-boot:run
+```
+visit [localhost:8080](http://localhost:8080)
+
 
