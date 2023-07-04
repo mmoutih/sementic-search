@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.json.JsonParseException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -37,6 +39,8 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 
+import co.elastic.clients.json.JsonData;
+import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import maroune.semanticsearch.simenticsearch.data.models.Post;
 import maroune.semanticsearch.simenticsearch.data.repositories.PostRepository;
 
@@ -109,6 +113,11 @@ public class PostService {
 
             e.printStackTrace();
         }
+    }
+
+    public List<Post> find(String text) {
+        Vector<Double> vector = new Vector<Double>(getEmbedding(text));
+        return repository.findBySimilar(JsonData.of(vector).toJson(new JacksonJsonpMapper()).toString());
     }
     
     public List<Double> getEmbedding(String text) {

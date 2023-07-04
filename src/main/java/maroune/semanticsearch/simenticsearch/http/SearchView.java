@@ -2,6 +2,7 @@ package maroune.semanticsearch.simenticsearch.http;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,6 +28,7 @@ public class SearchView extends VerticalLayout{
 
     protected final PostService service;
     protected int rowIndex = 0;
+    protected Grid<Post> grid;
 
     @Autowired
     public SearchView(PostService service) {
@@ -36,7 +38,7 @@ public class SearchView extends VerticalLayout{
     }
 
     private Component addGrid() {
-        Grid<Post> grid = new Grid<>(Post.class, isAttached());
+        grid = new Grid<>(Post.class, isAttached());
         grid.addComponentColumn(item -> {
             return new Span(getRowIndex());
         }).setHeader("#");
@@ -67,12 +69,18 @@ public class SearchView extends VerticalLayout{
         FormLayout formSearch = new FormLayout();
         TextField searchField = new TextField();
         Button searchButton = new Button(VaadinIcon.SEARCH_MINUS.create(), e -> {
-            (new Notification()).show("click");
+            
+            grid.setItems(service.find(searchField.getValue()).stream().limit(20).collect(Collectors.toList()));
+        });
+         Button resetButton = new Button(VaadinIcon.REFRESH.create(), e -> {
+            searchField.setValue("");
+            grid.setItems(service.getAll());
         });
         searchField.setPlaceholder("Your Search");
         formSearch.add(
                 searchField,
-                searchButton);
+                searchButton,
+                resetButton);
         return formSearch;
     }
 
