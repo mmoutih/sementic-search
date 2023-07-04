@@ -48,6 +48,7 @@ openai.token=YOUR_KEY
 start the app
 
 ```bash
+docker-compose up
 mvnw spring-boot:run
 ```
 visit [localhost:8080](http://localhost:8080)
